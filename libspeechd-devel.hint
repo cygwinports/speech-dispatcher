@@ -1,0 +1,8 @@
+category: Accessibility
+requires: libspeechd2 libglib2.0-devel
+external-source: speech-dispatcher
+sdesc: "Speech synthesis interface (client development)"
+ldesc: "The Speech Dispatcher project provides a device independent 
+layer for speech synthesis. It provides a simple interface for client 
+applications (applications, that want to speak) as well as for device 
+driver modules (the different speech synthesizers)."

@@ -1,0 +1,37 @@
+inherit python
+
+DESCRIPTION="High-level speech synthesis interface"
+HOMEPAGE="http://www.freebsoft.org/speechd"
+SRC_URI="http://www.freebsoft.org/pub/projects/speechd/${P}.tar.gz"
+
+PATCH_URI="
+	0.6.7-cygwin.patch
+	0.6.7-no-undefined.patch
+	0.6.7-vpath.patch
+"
+
+PKG_NAMES="${PN} libspeechd2 libspeechd-devel clisp-ssip python-speechd"
+speech_dispatcher_CONTENTS="--exclude=cygspeechd-2.dll --exclude=common-lisp
+                            --exclude=python${PYTHON_VERSION} --exclude=spd-conf
+                            etc/ usr/bin/ usr/lib/${PN}* usr/share/ var/"
+libspeechd2_CONTENTS="usr/bin/cygspeechd-2.dll"
+libspeechd_devel_CONTENTS="usr/include/ usr/lib/libspeechd.*"
+clisp_ssip_CONTENTS="usr/share/common-lisp/"
+python_speechd_CONTENTS="usr/bin/spd-conf ${PYTHON_SITELIB#/}"
+
+DIFF_EXCLUDES="build paths.py"
+
+src_install() {
+	cd ${B}
+	cyginstall
+
+	insinto /usr/share/common-lisp/source/ssip
+	doins ${S}/src/cl/*.{asd,lisp}
+
+	# defaults installed in /usr/share/${PN}/conf, requires custom postinst/prerm
+	rm -fr ${D}/etc/${PN}
+
+	keepdir /var/log/${PN}
+
+	python_optimize
+}

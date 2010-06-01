@@ -1,0 +1,39 @@
+--- origsrc/speech-dispatcher-0.6.7/src/c/clients/say/say.c	2007-05-03 04:43:12.000000000 -0500
++++ src/speech-dispatcher-0.6.7/src/c/clients/say/say.c	2010-05-31 22:58:55.664150000 -0500
+@@ -27,7 +27,6 @@
+ #include <stdlib.h>
+ #include <assert.h>
+ #include <semaphore.h>
+-#include <error.h>
+ #include <errno.h>
+ #include "libspeechd.h"
+ #include "options.h"
+--- origsrc/speech-dispatcher-0.6.7/src/server/config.c	2008-06-09 05:46:34.000000000 -0500
++++ src/speech-dispatcher-0.6.7/src/server/config.c	2010-06-01 01:48:52.088352100 -0500
+@@ -431,7 +431,7 @@ load_default_global_set_options()
+     GlobalFDSet.ssml_mode = 0;
+     GlobalFDSet.notification = NOTIFY_NOTHING;
+ 
+-    GlobalFDSet.audio_output_method = strdup("alsa");
++    GlobalFDSet.audio_output_method = strdup("oss");
+     GlobalFDSet.audio_oss_device = strdup("/dev/dsp");
+     GlobalFDSet.audio_alsa_device = strdup("default");
+     GlobalFDSet.audio_nas_server = strdup("tcp/localhost:5450");
+--- origsrc/speech-dispatcher-0.6.7/src/server/output.c	2008-06-27 07:28:48.000000000 -0500
++++ src/speech-dispatcher-0.6.7/src/server/output.c	2010-05-31 22:54:52.833260800 -0500
+@@ -26,6 +26,15 @@
+ #include "fdsetconv.c"
+ #include "parse.h"
+ 
++#ifndef TEMP_FAILURE_RETRY
++#define TEMP_FAILURE_RETRY(expression) \
++  (__extension__                                                              \
++    ({ long int __result;                                                     \
++       do __result = (long int) (expression);                                 \
++       while (__result == -1L && errno == EINTR);                             \
++       __result; }))
++#endif
++
+ void
+ output_set_speaking_monitor(TSpeechDMessage *msg, OutputModule *output)
+ {
