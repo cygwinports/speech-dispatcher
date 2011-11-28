@@ -1,5 +1,5 @@
 category: Accessibility
-requires: libgcc1 libglib2.0_0
+requires: libglib2.0_0
 external-source: speech-dispatcher
 sdesc: "Speech synthesis interface (client library)"
 ldesc: "The Speech Dispatcher project provides a device independent 

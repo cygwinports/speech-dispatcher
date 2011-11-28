@@ -1,5 +1,5 @@
 category: Accessibility
-requires: libaudio2 libdotconf1.0_0 libespeak1 libgcc1 libglib2.0_0 libsndfile1 libspeechd2
+requires: libao4 libaudio2 libdotconf0 libespeak1 libglib2.0_0 libpulse0 libpulse-simple0 libsndfile1 libspeechd2
 sdesc: "Speech synthesis interface (server and client apps)"
 ldesc: "The Speech Dispatcher project provides a device independent 
 layer for speech synthesis. It provides a simple interface for client 

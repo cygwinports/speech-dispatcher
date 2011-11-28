@@ -1,14 +1,9 @@
 inherit python
 
 DESCRIPTION="High-level speech synthesis interface"
-HOMEPAGE="http://www.freebsoft.org/speechd"
-SRC_URI="http://www.freebsoft.org/pub/projects/speechd/${P}.tar.gz"
-
-PATCH_URI="
-	0.6.7-cygwin.patch
-	0.6.7-no-undefined.patch
-	0.6.7-vpath.patch
-"
+HOMEPAGE="http://devel.freebsoft.org/speechd"
+SRC_URI="http://devel.freebsoft.org/pub/projects/speechd/${P}.tar.gz"
+PATCH_URI="0.7.1-no-undefined.patch"
 
 PKG_NAMES="${PN} libspeechd2 libspeechd-devel clisp-ssip python-speechd"
 speech_dispatcher_CONTENTS="--exclude=cygspeechd-2.dll --exclude=common-lisp

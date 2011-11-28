@@ -1,0 +1,31 @@
+--- origsrc/speech-dispatcher-0.7.1/src/audio/Makefile.am	2010-09-06 08:46:36.000000000 -0500
++++ src/speech-dispatcher-0.7.1/src/audio/Makefile.am	2011-11-28 01:39:21.391990500 -0600
+@@ -11,7 +11,7 @@ endif
+ 
+ if pulse_support
+ PULSE_FLAGS = -DWITH_PULSE
+-PULSE_LIBS = -lpulse-simple
++PULSE_LIBS = -lpulse-simple -lpulse
+ endif
+ 
+ if alsa_support
+@@ -31,7 +31,8 @@ endif
+ EXTRA_DIST = alsa.c libao.c oss.c nas.c pulse.c
+ 
+ AM_CFLAGS = $(am_cflags) $(NAS_FLAGS) $(PULSE_FLAGS) $(ALSA_FLAGS) $(LIBAO_FLAGS) $(LIBOSS_FLAGS)
+-libsdaudio_la_LDFLAGS = -version-info @LIB_SDAUDIO_CURRENT@:@LIB_SDAUDIO_REVISION@:@LIB_SDAUDIO_AGE@ -lpthread $(NAS_LIBS) $(PULSE_LIBS) $(ALSA_LIBS) $(LIBAO_LIBS)
++libsdaudio_la_LDFLAGS = -version-info @LIB_SDAUDIO_CURRENT@:@LIB_SDAUDIO_REVISION@:@LIB_SDAUDIO_AGE@ -no-undefined
++libsdaudio_la_LIBADD = -lpthread $(NAS_LIBS) $(PULSE_LIBS) $(ALSA_LIBS) $(LIBAO_LIBS)
+ 
+ spdlib_LTLIBRARIES = libsdaudio.la
+ 
+--- origsrc/speech-dispatcher-0.7.1/src/c/api/Makefile.am	2010-09-01 08:30:12.000000000 -0500
++++ src/speech-dispatcher-0.7.1/src/c/api/Makefile.am	2011-11-28 01:39:07.504196200 -0600
+@@ -8,6 +8,6 @@ lib_LTLIBRARIES = libspeechd.la
+ libspeechd_la_SOURCES = libspeechd.c
+ libspeechd_la_HEADERS = libspeechd.h
+ libspeechd_ladir = $(includedir)
+-libspeechd_la_LDFLAGS = -version-info @LIB_SPD_CURRENT@:@LIB_SPD_REVISION@:@LIB_SPD_AGE@ -lpthread
++libspeechd_la_LDFLAGS = -version-info @LIB_SPD_CURRENT@:@LIB_SPD_REVISION@:@LIB_SPD_AGE@ -no-undefined -lpthread
+ libspeechd_la_LIBADD = @glib_libs@
+ 
