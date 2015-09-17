@@ -1,0 +1,15 @@
+--- origsrc/speech-dispatcher-0.8.3/src/server/module.c	2015-05-07 18:19:02.000000000 -0500
++++ src/speech-dispatcher-0.8.3/src/server/module.c	2015-09-17 17:18:38.891213700 -0500
+@@ -101,7 +101,12 @@ GList *detect_output_modules(char *dirna
+ 
+ 		module_parameters = g_malloc(4 * sizeof(char *));
+ 		module_parameters[0] =
++#ifdef G_PLATFORM_WIN32
++		    g_strndup(entry->d_name + FNAME_PREFIX_LENGTH,
++		              strlen(entry->d_name) - FNAME_PREFIX_LENGTH - 4 /* .exe */);
++#else
+ 		    g_strdup(entry->d_name + FNAME_PREFIX_LENGTH);
++#endif
+ 		module_parameters[1] = g_strdup(entry->d_name);
+ 		module_parameters[2] =
+ 		    g_strdup_printf("%s.conf", module_parameters[0]);

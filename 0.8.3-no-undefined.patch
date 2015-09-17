@@ -1,0 +1,47 @@
+--- origsrc/speech-dispatcher-0.8.3/src/api/c/Makefile.am	2015-05-25 18:59:57.000000000 -0500
++++ src/speech-dispatcher-0.8.3/src/api/c/Makefile.am	2015-09-17 14:35:49.107108700 -0500
+@@ -8,7 +8,7 @@ lib_LTLIBRARIES = libspeechd.la
+ libspeechd_la_SOURCES = libspeechd.c
+ libspeechd_la_CFLAGS = $(ERROR_CFLAGS)
+ libspeechd_la_CPPFLAGS = $(inc_local) -D_GNU_SOURCE $(GLIB_CFLAGS) -DSPD_SPAWN_CMD=\""$(prefix)/bin/speech-dispatcher"\"
+-libspeechd_la_LDFLAGS = -version-info $(LIB_SPD_CURRENT):$(LIB_SPD_REVISION):$(LIB_SPD_AGE)
++libspeechd_la_LDFLAGS = -version-info $(LIB_SPD_CURRENT):$(LIB_SPD_REVISION):$(LIB_SPD_AGE) -no-undefined
+ libspeechd_la_LIBADD = $(GLIB_LIBS)
+ 
+ libspeechd_version.h: $(srcdir)/libspeechd_version.h.in
+--- origsrc/speech-dispatcher-0.8.3/src/audio/Makefile.am	2013-10-28 17:13:31.000000000 -0500
++++ src/speech-dispatcher-0.8.3/src/audio/Makefile.am	2015-09-17 14:35:21.875650800 -0500
+@@ -17,7 +17,7 @@ audio_LTLIBRARIES +=  spd_libao.la
+ spd_libao_la_SOURCES = libao.c
+ spd_libao_la_CPPFLAGS = $(GLIB_CFLAGS) $(inc_local)  $(LIBAO_CFLAGS)
+ spd_libao_la_LIBADD = $(LIBAO_LIBS) $(GLIB_LIBS)
+-spd_libao_la_LDFLAGS = -module -avoid-version
++spd_libao_la_LDFLAGS = -module -avoid-version -no-undefined
+ endif
+ 
+ if nas_support
+@@ -25,7 +25,7 @@ audio_LTLIBRARIES +=  spd_nas.la
+ spd_nas_la_SOURCES = nas.c
+ spd_nas_la_CPPFLAGS = $(GLIB_CFLAGS) $(inc_local)
+ spd_nas_la_LIBADD = $(NAS_LIBS) $(GLIB_LIBS)
+-spd_nas_la_LDFLAGS = -module -avoid-version
++spd_nas_la_LDFLAGS = -module -avoid-version -no-undefined
+ endif
+ 
+ if oss_support
+@@ -33,7 +33,7 @@ audio_LTLIBRARIES +=  spd_oss.la
+ spd_oss_la_SOURCES = oss.c
+ spd_oss_la_CPPFLAGS = $(GLIB_CFLAGS) $(inc_local)
+ spd_oss_la_LIBADD = $(GLIB_LIBS)
+-spd_oss_la_LDFLAGS = -module -avoid-version
++spd_oss_la_LDFLAGS = -module -avoid-version -no-undefined
+ endif
+ 
+ if pulse_support
+@@ -41,5 +41,5 @@ audio_LTLIBRARIES +=  spd_pulse.la
+ spd_pulse_la_SOURCES = pulse.c
+ spd_pulse_la_CPPFLAGS = $(GLIB_CFLAGS) $(inc_local)  $(PULSE_CFLAGS)
+ spd_pulse_la_LIBADD = $(PULSE_LIBS) $(GLIB_LIBS)
+-spd_pulse_la_LDFLAGS = -module -avoid-version
++spd_pulse_la_LDFLAGS = -module -avoid-version -no-undefined
+ endif

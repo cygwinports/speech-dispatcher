@@ -1,0 +1,54 @@
+--- origsrc/speech-dispatcher-0.8.3/src/audio/alsa.c	2015-05-07 18:19:02.000000000 -0500
++++ src/speech-dispatcher-0.8.3/src/audio/alsa.c	2015-09-17 16:56:19.657152600 -0500
+@@ -878,6 +878,6 @@ spd_audio_plugin_t *alsa_plugin_get(void
+ }
+ 
+ spd_audio_plugin_t *SPD_AUDIO_PLUGIN_ENTRY(void)
+-    __attribute__ ((weak, alias("alsa_plugin_get")));
++    __attribute__ ((alias("alsa_plugin_get")));
+ #undef MSG
+ #undef ERR
+--- origsrc/speech-dispatcher-0.8.3/src/audio/libao.c	2015-05-07 18:19:02.000000000 -0500
++++ src/speech-dispatcher-0.8.3/src/audio/libao.c	2015-09-17 16:56:19.661153100 -0500
+@@ -241,6 +241,6 @@ spd_audio_plugin_t *libao_plugin_get(voi
+ }
+ 
+ spd_audio_plugin_t *SPD_AUDIO_PLUGIN_ENTRY(void)
+-    __attribute__ ((weak, alias("libao_plugin_get")));
++    __attribute__ ((alias("libao_plugin_get")));
+ #undef MSG
+ #undef ERR
+--- origsrc/speech-dispatcher-0.8.3/src/audio/nas.c	2013-10-28 17:13:31.000000000 -0500
++++ src/speech-dispatcher-0.8.3/src/audio/nas.c	2015-09-17 16:56:19.665653700 -0500
+@@ -27,6 +27,7 @@
+ 
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <sys/time.h>
+ #include <glib.h>
+ #include <audio/audiolib.h>
+ #include <audio/soundlib.h>
+@@ -260,4 +261,4 @@ spd_audio_plugin_t *nas_plugin_get(void)
+ }
+ 
+ spd_audio_plugin_t *SPD_AUDIO_PLUGIN_ENTRY(void)
+-    __attribute__ ((weak, alias("nas_plugin_get")));
++    __attribute__ ((alias("nas_plugin_get")));
+--- origsrc/speech-dispatcher-0.8.3/src/audio/oss.c	2015-05-07 18:19:02.000000000 -0500
++++ src/speech-dispatcher-0.8.3/src/audio/oss.c	2015-09-17 16:56:19.671154400 -0500
+@@ -518,6 +518,6 @@ spd_audio_plugin_t *oss_plugin_get(void)
+ }
+ 
+ spd_audio_plugin_t *SPD_AUDIO_PLUGIN_ENTRY(void)
+-    __attribute__ ((weak, alias("oss_plugin_get")));
++    __attribute__ ((alias("oss_plugin_get")));
+ #undef MSG
+ #undef ERR
+--- origsrc/speech-dispatcher-0.8.3/src/audio/pulse.c	2013-10-28 17:13:31.000000000 -0500
++++ src/speech-dispatcher-0.8.3/src/audio/pulse.c	2015-09-17 16:56:19.675154900 -0500
+@@ -307,4 +307,4 @@ spd_audio_plugin_t *pulse_plugin_get(voi
+ }
+ 
+ spd_audio_plugin_t *SPD_AUDIO_PLUGIN_ENTRY(void)
+-    __attribute__ ((weak, alias("pulse_plugin_get")));
++    __attribute__ ((alias("pulse_plugin_get")));

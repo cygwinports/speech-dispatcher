@@ -1,8 +1,8 @@
-inherit python
+inherit python3
 
 NAME="speech-dispatcher"
-VERSION=0.7.1
-RELEASE=2
+VERSION=0.8.3
+RELEASE=1
 CATEGORY="Accessibility"
 SUMMARY="Speech synthesis interface"
 DESCRIPTION="The Speech Dispatcher project provides a device independent layer
@@ -11,36 +11,66 @@ for speech synthesis. It provides a simple interface for client applications
 different speech synthesizers)."
 HOMEPAGE="http://devel.freebsoft.org/speechd"
 SRC_URI="http://devel.freebsoft.org/pub/projects/speechd/${P}.tar.gz"
-PATCH_URI="0.7.1-no-undefined.patch"
+PATCH_URI="
+	0.8.3-audio-dlsym.patch
+	0.8.3-module-conf.patch
+	0.8.3-no-undefined.patch
+"
 
-PKG_NAMES="${PN} libspeechd2 libspeechd-devel clisp-ssip python-speechd"
-speech_dispatcher_SUMMARY="${SUMMARY} (server and client apps)"
-speech_dispatcher_CONTENTS="--exclude=cygspeechd-2.dll --exclude=common-lisp
-                            --exclude=python${PYTHON_VERSION} --exclude=spd-conf
-                            etc/ usr/bin/ usr/lib/${PN}* usr/share/ var/"
+PKG_NAMES="${NAME} ${NAME}-utils libspeechd2 libspeechd-devel python3-speechd"
+speech_dispatcher_SUMMARY="${SUMMARY} (server)"
+speech_dispatcher_CONTENTS="
+	etc/postinstall/${NAME}.sh
+	etc/preremove/${NAME}.sh
+	usr/bin/speech-dispatcher.exe
+	usr/lib/${NAME}-modules/
+	usr/lib/${NAME}/
+	usr/share/doc/${NAME}/
+	usr/share/info/speech-dispatcher*
+	usr/share/info/ssip.info.gz
+	usr/share/locale/
+	usr/share/sounds/speech-dispatcher/
+	usr/share/speech-dispatcher/
+"
+speech_dispatcher_utils_SUMMARY="${SUMMARY} (clients)"
+speech_dispatcher_utils_CONTENTS="
+	usr/bin/spd-conf
+	usr/bin/spd-say.exe
+	usr/bin/spdsend.exe
+	usr/share/info/spd-say.info.gz
+"
 libspeechd2_SUMMARY="${SUMMARY} (client library)"
+libspeechd2_REQUIRES=${NAME}
 libspeechd2_CONTENTS="usr/bin/cygspeechd-2.dll"
 libspeechd_devel_SUMMARY="${SUMMARY} (client development)"
-libspeechd_devel_CONTENTS="usr/include/ usr/lib/libspeechd.*"
-clisp_ssip_SUMMARY="${SUMMARY} (Common Lisp interface)"
-clisp_ssip_CONTENTS="usr/share/common-lisp/"
-python_speechd_CATEGORY="Python"
-python_speechd_SUMMARY="${SUMMARY} (Python interface)"
-python_speechd_CONTENTS="usr/bin/spd-conf ${PYTHON_SITELIB#/}"
+libspeechd_devel_CONTENTS="usr/include/ usr/lib/libspeechd.* usr/lib/pkgconfig/speech-dispatcher.pc"
+python3_speechd_CATEGORY="Python"
+python3_speechd_SUMMARY="${SUMMARY} (Python interface)"
+python3_speechd_OBSOLETES="python-speechd"
+python3_speechd_CONTENTS="${PYTHON3_SITELIB#/}"
 
-DIFF_EXCLUDES="build paths.py"
+DIFF_EXCLUDES="build doc paths.py"
+
+CYGCONF_ARGS="
+	--with-espeak
+	--with-flite
+	--without-alsa
+	--without-libao
+	--without-nas
+	--with-oss
+	--with-pulse
+	--with-default-audio-method=pulse
+"
+MAKEOPTS+=" RDYNAMIC=-Wl,--export-all-symbols"
 
 src_install() {
 	cd ${B}
 	cyginstall
 
-	insinto /usr/share/common-lisp/source/ssip
-	doins ${S}/src/cl/*.{asd,lisp}
-
 	# defaults installed in /usr/share/${PN}/conf, requires custom postinst/prerm
 	rm -fr ${D}/etc/${PN}
 
-	keepdir /var/log/${PN}
+	keepdir /var/log/${NAME}
 
-	python_optimize
+	python3_optimize
 }
