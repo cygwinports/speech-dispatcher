@@ -1,0 +1,15 @@
+--- origsrc/speech-dispatcher-0.8.7/configure.ac	2017-05-15 18:55:32.000000000 -0500
++++ src/speech-dispatcher-0.8.7/configure.ac	2017-10-23 20:36:32.459518700 -0500
+@@ -13,9 +13,9 @@ IT_PROG_INTLTOOL([0.40.0])
+ AM_GLIB_GNU_GETTEXT
+ 
+ # Split version number
+-MAJOR_VERSION="$(./split-version.sh -ma)"
+-MINOR_VERSION="$(./split-version.sh -mi)"
+-MICRO_VERSION="$(./split-version.sh -mc)"
++MAJOR_VERSION="$(cd $srcdir; ./split-version.sh -ma)"
++MINOR_VERSION="$(cd $srcdir; ./split-version.sh -mi)"
++MICRO_VERSION="$(cd $srcdir; ./split-version.sh -mc)"
+ AC_SUBST([MAJOR_VERSION])
+ AC_SUBST([MINOR_VERSION])
+ AC_SUBST([MICRO_VERSION])
